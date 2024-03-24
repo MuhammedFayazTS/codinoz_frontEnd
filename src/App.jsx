@@ -8,6 +8,7 @@ import Welcome from "./components/Welcome/Welcome"
 import CreatePost from "./components/create Post/CreatePost"
 import EditPost from "./components/Edit Post/EditPost"
 import ProtectedRoute from "./Routes/ProtectedRoute"
+import Profile from "./pages/Profile"
 
 
 function App() {
@@ -37,6 +38,12 @@ function App() {
             <Route path="/edit-post/:id" element={
               <ProtectedRoute>
                 <EditPost />
+              </ProtectedRoute>
+            } />
+            {/* Profile page */}
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
           </Route>

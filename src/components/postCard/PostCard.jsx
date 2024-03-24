@@ -1,16 +1,19 @@
 import { useContext, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import tickIco from "../../assets/icons/tick.svg"
 import copyIco from "../../assets/icons/copy.svg"
 import { postContext } from "../../Context/PostContextProvider"
+import { deletePostAPI } from "../../services/allAPI"
+import { userContext } from "../../Context/UserContextProvider"
 
 
 
 const PostCard = ({ post, handleTitleClick }) => {
 
   const navigate = useNavigate()
+  const location = useLocation();
   const token = sessionStorage.getItem('token')
-  const userId = sessionStorage.getItem('userId')
+  const { user, setRefresh } = useContext(userContext)
 
   const [copied, setCopied] = useState("")
 
@@ -29,8 +32,21 @@ const PostCard = ({ post, handleTitleClick }) => {
     navigate(`/edit-post/${post._id}`)
   }
 
-  const handleDelete = (post) => {
-
+  const handleDelete = async (e, postId) => {
+    e.preventDefault();
+    try {
+      const header = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+      const response = await deletePostAPI(postId, header)
+      if (response.status === 200) {
+        alert(response.data.message)
+        setRefresh(prev => !prev)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -81,7 +97,7 @@ const PostCard = ({ post, handleTitleClick }) => {
 
 
       </div>
-      {token && userId === post.creator._id &&
+      {token && user.id === post.creator._id && location.pathname === "/profile" &&
         (
           <div className="mt-5 flex justify-center items-center gap-4 border-t border-gray-100 pt-3">
             <p
@@ -92,7 +108,7 @@ const PostCard = ({ post, handleTitleClick }) => {
             </p>
             <p
               className="font-inter text-sm orange_gradient cursor-pointer"
-              onClick={handleDelete}
+              onClick={(e) => handleDelete(e, post._id)}
             >
               Delete
             </p>

@@ -49,7 +49,7 @@ const Register = () => {
     return (
         <>
             <section className='w-full min-h-screen flex justify-center items-center p-5 md:py-16'>
-                <div className='w-full md:w-1/2 p-8 shadow  glassmorphism'>
+                <div className='w-full md:w-1/2  md:p-8 md:shadow  md:glassmorphism'>
                 <h2 className=" text-center text-4xl font-bold orange_gradient">SignUp</h2>
                     <FormComponent initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} >
                         <InputField type="text" label="Name" name="name" />

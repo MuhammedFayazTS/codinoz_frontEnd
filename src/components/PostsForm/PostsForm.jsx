@@ -30,7 +30,7 @@ const PostsForm = ({ handleSubmit, submitting, type, post, setPost }) => {
                             title: e.target.value
                         })}
                         required
-                        placeholder="title for the code snippet"
+                        placeholder="Title for the code snippet"
                         className="form_input"
                     />
                 </label>
@@ -63,7 +63,7 @@ const PostsForm = ({ handleSubmit, submitting, type, post, setPost }) => {
 
                     <button type="submit"
                         disabled={submitting}
-                        className="px-5 py-1.5 text-sm orange_gradient-btn rounded-full  text-white"
+                        className="px-5 py-1.5 text-sm orange_gradient-btn rounded-full  text-white hover:outline hover:outline-black/20"
                     >
                         {submitting ? `${type}...` : type}
                     </button>

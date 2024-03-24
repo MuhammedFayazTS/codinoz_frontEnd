@@ -21,6 +21,11 @@ export const fetchAllPostsAPI = async () => {
   return await commonAPI("get", `${BASE_URL}/api/post`);
 };
 
+// get all user post api
+export const fetchUserPostsAPI = async (header) => {
+  return await commonAPI("get", `${BASE_URL}/api/post/user/`,"",header);
+};
+
 // create new post api
 export const createNewPostAPI = async (postDetails,headers) => {
   return await commonAPI("post", `${BASE_URL}/api/post`, postDetails, headers);
@@ -32,6 +37,6 @@ export const editPostAPI = async (postId,postDetails,headers) => {
 };
 
 // delete post api
-export const deletePostAPI = async (postId,postDetails,headers) => {
+export const deletePostAPI = async (postId,headers) => {
   return await commonAPI("delete", `${BASE_URL}/api/post/${postId}`, {}, headers);
 };
