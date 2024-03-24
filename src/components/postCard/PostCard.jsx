@@ -1,0 +1,106 @@
+import { useContext, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import tickIco from "../../assets/icons/tick.svg"
+import copyIco from "../../assets/icons/copy.svg"
+import { postContext } from "../../Context/PostContextProvider"
+
+
+
+const PostCard = ({ post, handleTitleClick }) => {
+
+  const navigate = useNavigate()
+  const token = sessionStorage.getItem('token')
+  const userId = sessionStorage.getItem('userId')
+
+  const [copied, setCopied] = useState("")
+
+  const handleCopy = () => {
+    setCopied(post.codeSnippet)
+    navigator.clipboard.writeText(post.codeSnippet);
+    setTimeout(() => setCopied(""), 5000)
+  }
+
+
+  const { setPostData } = useContext(postContext)
+
+  const handleEdit = (e, post) => {
+    e.preventDefault();
+    setPostData(post)
+    navigate(`/edit-post/${post._id}`)
+  }
+
+  const handleDelete = (post) => {
+
+  }
+
+  return (
+    <div className="post_card ">
+      <div className="flex justify-between items-start gap-5">
+        <div className="flex flex-1 justify-start items-center gap-3 cursor-pointer">
+          <img
+            src={post.creator.image}
+            alt="user_image"
+            width={40}
+            height={40}
+            className="rounded-full aspect-square object-cover object-center"
+          />
+
+          <div className="flex flex-col">
+            <h3 className="font-sathoshi font-semibold text-gray-900">
+              {post.creator.name}
+            </h3>
+            <p className="font-inter text-sm text-gray-500">
+              {post.creator.email}
+            </p>
+          </div>
+        </div>
+
+        <div className="copy_btn" onClick={() => handleCopy()} >
+          <img
+            src={copied === post.codeSnippet
+              ? tickIco
+              : copyIco}
+            alt="copy_image"
+            width={12}
+            height={12}
+          />
+        </div>
+      </div>
+
+      <div className="mt-4 rounded">
+        <p className="font-inter text-sm font-serif blue_gradient cursor-pointer"
+          onClick={() => handleTitleClick && handleTitleClick(post.title)}>
+          #{post.title}
+        </p>
+
+        <p className="my-4 max-h-[300px] overflow-y-auto font-sathoshi text-sm p-1 rounded bg-gray-200/20">
+          <span className="bg-clip-text text-transparent black_gradient text-left">
+            {post.codeSnippet}
+          </span>
+        </p>
+
+
+      </div>
+      {token && userId === post.creator._id &&
+        (
+          <div className="mt-5 flex justify-center items-center gap-4 border-t border-gray-100 pt-3">
+            <p
+              className="font-inter text-sm green_gradient cursor-pointer"
+              onClick={(e) => handleEdit(e, post)}
+            >
+              Edit
+            </p>
+            <p
+              className="font-inter text-sm orange_gradient cursor-pointer"
+              onClick={handleDelete}
+            >
+              Delete
+            </p>
+          </div>
+        )}
+
+    </div>
+  )
+}
+
+export default PostCard

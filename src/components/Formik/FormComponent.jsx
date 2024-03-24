@@ -6,7 +6,7 @@ const FormComponent = ({ initialValues, validationSchema, onSubmit, children }) 
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} >
       {
         formik => (
-          <Form>
+          <Form className='flex flex-col items-center gap-y-2'>
             {children}
           </Form>
         )
