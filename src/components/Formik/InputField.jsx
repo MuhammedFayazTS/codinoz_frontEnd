@@ -13,6 +13,7 @@ const InputField = (props) => {
                 {...rest}
                 className="mt-1 form_input"
             />
+            {/* component to display the error message in form */}
             <ErrorMessage name={name} component={TextError} />
         </div>
     )

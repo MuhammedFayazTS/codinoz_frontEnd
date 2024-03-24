@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { verifyAPI } from "../services/allAPI"
-import verifyImg from "../assets/images/verified.jpg"
+import verifyImg from "../assets/images/verified.png"
 const VerifyEmail = () => {
 
   const [validUrl, setValidUrl] = useState(false)

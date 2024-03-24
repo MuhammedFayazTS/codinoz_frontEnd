@@ -45,7 +45,6 @@ const Profile = () => {
                     <PostCard
                         key={post._id}
                         post={post}
-                    // handleEdit={handleEdit && handleEdit(post)}
                     />
                 ))}
             </div>

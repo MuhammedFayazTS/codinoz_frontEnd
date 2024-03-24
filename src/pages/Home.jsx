@@ -17,6 +17,7 @@ const Home = () => {
         The go-to platform for sharing and discovering code snippets. Share, explore, and collaborate effortlessly with fellow developers.
         </p>
 
+        {/* displays all posts */}
         <Feed />
 
       </section>

@@ -8,30 +8,32 @@ import { userContext } from "../../Context/UserContextProvider"
 
 
 
-const PostCard = ({ post, handleTitleClick }) => {
+const PostCard = ({ post }) => {
+ // Hooks initialization
+ const navigate = useNavigate()
+ const location = useLocation();
+ const token = sessionStorage.getItem('token')
+ const { user, setRefresh } = useContext(userContext)
+ const [copied, setCopied] = useState("")
 
-  const navigate = useNavigate()
-  const location = useLocation();
-  const token = sessionStorage.getItem('token')
-  const { user, setRefresh } = useContext(userContext)
+ // Function to copy code snippet to clipboard
+ const handleCopy = () => {
+   setCopied(post.codeSnippet)
+   navigator.clipboard.writeText(post.codeSnippet);
+   setTimeout(() => setCopied(""), 5000)
+ }
 
-  const [copied, setCopied] = useState("")
+ // Accessing post context for setting post data
+ const { setPostData } = useContext(postContext)
 
-  const handleCopy = () => {
-    setCopied(post.codeSnippet)
-    navigator.clipboard.writeText(post.codeSnippet);
-    setTimeout(() => setCopied(""), 5000)
+ // Function to handle editing a post
+ const handleEdit = (e, post) => {
+   e.preventDefault();
+   setPostData(post)
+   navigate(`/edit-post/${post._id}`)
   }
-
-
-  const { setPostData } = useContext(postContext)
-
-  const handleEdit = (e, post) => {
-    e.preventDefault();
-    setPostData(post)
-    navigate(`/edit-post/${post._id}`)
-  }
-
+  
+  // Function to handle deleting a post
   const handleDelete = async (e, postId) => {
     e.preventDefault();
     try {
@@ -84,12 +86,11 @@ const PostCard = ({ post, handleTitleClick }) => {
       </div>
 
       <div className="mt-4 rounded">
-        <p className="font-inter text-sm font-serif blue_gradient cursor-pointer"
-          onClick={() => handleTitleClick && handleTitleClick(post.title)}>
+        <p className="font-inter text-sm font-serif blue_gradient cursor-pointer">
           #{post.title}
         </p>
 
-        <p className="my-4 max-h-[300px] overflow-y-auto font-sathoshi text-sm p-1 rounded bg-gray-200/20">
+        <p className="my-4 max-h-[300px] overflow-y-auto font-sathoshi text-sm p-2 rounded bg-gray-200/50">
           <span className="bg-clip-text text-transparent black_gradient text-left">
             {post.codeSnippet}
           </span>
@@ -97,6 +98,8 @@ const PostCard = ({ post, handleTitleClick }) => {
 
 
       </div>
+      
+      {/*Renders the edit and delete button only if the follwing conditions are true */}
       {token && user.id === post.creator._id && location.pathname === "/profile" &&
         (
           <div className="mt-5 flex justify-center items-center gap-4 border-t border-gray-100 pt-3">

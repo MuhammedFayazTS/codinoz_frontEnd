@@ -11,14 +11,20 @@ export const registerAPI = async (userData) => {
   return await commonAPI("post", `${BASE_URL}/api/user/register`, userData);
 };
 
+// verify token api call
+export const verifyTokenAPI = async (header) => {
+  return await commonAPI("get", `${BASE_URL}/api/user/verify/token`, "",header);
+};
+
+
 // verify api call
 export const verifyAPI = async (id, token) => {
   return await commonAPI("get", `${BASE_URL}/api/user/${id}/verify/${token}`);
 };
 
 // get all post api
-export const fetchAllPostsAPI = async () => {
-  return await commonAPI("get", `${BASE_URL}/api/post`);
+export const fetchAllPostsAPI = async ({searchText,page,limit}) => {
+  return await commonAPI("get", `${BASE_URL}/api/post?search=${searchText}&&page=${page}&&limit=${limit}`);
 };
 
 // get all user post api

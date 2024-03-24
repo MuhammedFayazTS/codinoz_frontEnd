@@ -7,11 +7,14 @@ import { Link, useNavigate } from "react-router-dom"
 
 const Login = () => {
 
+    // state to display the message from the login api
     const [msg, setMsg] = useState("")
+    // state for getting the form the submission status
     const [submitting, setSubmitting] = useState(false)
 
     const navigate = useNavigate()
 
+    // Yup schema and initial values for validating the form
     const initialValues = {
         email: "",
         password: "",
@@ -20,7 +23,7 @@ const Login = () => {
         email: Yup.string().email('Invalid email Address').required("Email is required !"),
         password: Yup.string().required("Password is required !"),
     })
-
+    // sign in function
     const handleSignIn = async (values) => {
         try {
             setSubmitting(true)
@@ -28,7 +31,7 @@ const Login = () => {
             if (response.status === 200) {
                 setMsg(response.data.message);
                 sessionStorage.setItem('token', response.data.token)
-                sessionStorage.setItem('user',JSON.stringify(response.data.user))
+                sessionStorage.setItem('user', JSON.stringify(response.data.user))
                 navigate('/welcome')
             }
         } catch (error) {
@@ -37,7 +40,7 @@ const Login = () => {
             setSubmitting(false)
         }
     }
-
+    // onsubmit for form submission
     const onSubmit = values => {
         handleSignIn(values)
     }
@@ -52,7 +55,7 @@ const Login = () => {
                         <InputField type="email" label="Email" name="email" />
                         <InputField type="password" label="Password" name="password" />
 
-                        {/* display verify email send message */}
+                        {/* area to display verify email send message */}
                         {
                             msg &&
                             <div className="w-full p-2 inline-flex justify-center items-center rounded text-green-500 bg-green-100">

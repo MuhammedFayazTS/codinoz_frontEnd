@@ -54,7 +54,7 @@ const NavBar = () => {
                                         onError={(e) => e.target.src = "https://img.icons8.com/ios/50/menu--v7.png"}
                                         width={37}
                                         height={37}
-                                        className='rounded-full'
+                                        className='rounded-full aspect-square object-cover'
                                         alt='profile'
                                         onClick={() => { setToggleDropDown((prev) => !prev) }}
                                     />
@@ -81,7 +81,7 @@ const NavBar = () => {
                                 onError={(e) => e.target.src = "https://img.icons8.com/ios/50/menu--v7.png"}
                                 width={37}
                                 height={37}
-                                className='rounded-full'
+                                className='rounded-full aspect-square object-cover'
                                 alt='profile'
                                 onClick={() => { setToggleDropDown((prev) => !prev) }}
                             />

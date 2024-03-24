@@ -1,13 +1,14 @@
-import { ErrorMessage } from 'formik'
+import { ErrorMessage, Field } from 'formik'
 import TextError from './TextError'
 
 
 const TextArea = (props) => {
+    // destructure label , name and other props
     const { label, name, ...rest } = props
     return (
         <div className="my-2 w-full">
             <label htmlFor={name} className="block text-sm font-medium text-gray-700"> {label} </label>
-            <textarea
+            <Field as="textArea"
                 name={name}
                 id={name}
                 {...rest}
